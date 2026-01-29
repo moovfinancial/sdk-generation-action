@@ -241,7 +241,7 @@ jobs:
         if: ${{ steps.check-label.outputs.short_circuit_label_trigger != 'true' }}
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
-          repository: speakeasy-api/sdk-generation-action
+          repository: moovfinancial/sdk-generation-action
           ref: ${{ github.job_workflow_sha }}
           path: _speakeasy
       - id: run-workflow
@@ -322,7 +322,7 @@ jobs:
       - name: Checkout sdk-generation-action repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
-          repository: speakeasy-api/sdk-generation-action
+          repository: moovfinancial/sdk-generation-action
           ref: ${{ github.job_workflow_sha }}
           path: _speakeasy
       - name: Set up Python
@@ -423,7 +423,7 @@ jobs:
       - name: Checkout sdk-generation-action repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
-          repository: speakeasy-api/sdk-generation-action
+          repository: moovfinancial/sdk-generation-action
           ref: ${{ github.job_workflow_sha }}
           path: _speakeasy
       - name: Set up Node
@@ -513,7 +513,7 @@ jobs:
       - name: Checkout sdk-generation-action repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
-          repository: speakeasy-api/sdk-generation-action
+          repository: moovfinancial/sdk-generation-action
           ref: ${{ github.job_workflow_sha }}
           path: _speakeasy
       - uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
@@ -605,7 +605,7 @@ jobs:
       - name: Checkout sdk-generation-action repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
-          repository: speakeasy-api/sdk-generation-action
+          repository: moovfinancial/sdk-generation-action
           ref: ${{ github.job_workflow_sha }}
           path: _speakeasy
       - name: Set up Ruby
@@ -686,7 +686,7 @@ jobs:
       - name: Checkout sdk-generation-action repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
-          repository: speakeasy-api/sdk-generation-action
+          repository: moovfinancial/sdk-generation-action
           ref: ${{ github.job_workflow_sha }}
           path: _speakeasy
       - name: Setup dotnet
@@ -757,7 +757,7 @@ jobs:
       - name: Checkout sdk-generation-action repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
-          repository: speakeasy-api/sdk-generation-action
+          repository: moovfinancial/sdk-generation-action
           ref: ${{ github.job_workflow_sha }}
           path: _speakeasy
       - name: Publish
