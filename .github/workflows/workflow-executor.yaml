@@ -124,6 +124,10 @@ on:
         default: true
         required: false
         type: boolean
+      npm_tag:
+        description: "Custom npm dist-tag to use instead of 'latest' for non-prerelease versions"
+        required: false
+        type: string
     secrets:
       github_access_token:
         description: A GitHub access token with write access to the repo
