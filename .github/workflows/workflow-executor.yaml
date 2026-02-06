@@ -442,6 +442,7 @@ jobs:
       - name: Publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
+          NPM_TAG: ${{ inputs.npm_tag }}
         run: |
           VERSION=$(npm pkg get version | tr -d '"')
           echo "Detected version: $VERSION"
@@ -451,6 +452,9 @@ jobs:
             TAG=${PRERELEASE%%.*}
             echo "Prerelease detected; publishing under dist-tag: $TAG"
             npm publish --tag "$TAG" --access public
+          elif [[ -n "$NPM_TAG" ]]; then
+            echo "Custom tag provided; publishing under dist-tag: $NPM_TAG"
+            npm publish --tag "$NPM_TAG" --access public
           else
             echo "Official release detected; publishing under 'latest'"
             npm publish --access public
