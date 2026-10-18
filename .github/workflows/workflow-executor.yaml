@@ -128,6 +128,11 @@ on:
         description: "Custom npm dist-tag to use instead of 'latest' for non-prerelease versions"
         required: false
         type: string
+      npm_promote_latest:
+        description: "After publishing a non-prerelease version under npm_tag, also point 'latest' at it if it is newer than the current 'latest'"
+        default: false
+        required: false
+        type: boolean
     secrets:
       github_access_token:
         description: A GitHub access token with write access to the repo
@@ -458,6 +463,36 @@ jobs:
           else
             echo "Official release detected; publishing under 'latest'"
             npm publish --access public
+          fi
+      - name: Promote to latest
+        if: ${{ inputs.npm_promote_latest && inputs.npm_tag != '' }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
+        run: |
+          NAME=$(npm pkg get name | tr -d '"')
+          VERSION=$(npm pkg get version | tr -d '"')
+
+          if [[ "$VERSION" == *"-"* ]]; then
+            echo "Prerelease $VERSION; leaving 'latest' alone"
+            exit 0
+          fi
+
+          # Only move 'latest' forward, so a backport to an older version
+          # branch does not take it over.
+          CURRENT=$(npm view "$NAME" dist-tags.latest || true)
+          NEWEST=$(printf '%s\n%s\n' "$CURRENT" "$VERSION" | sort -V | tail -n1)
+          if [[ "$CURRENT" == "$VERSION" || "$NEWEST" != "$VERSION" ]]; then
+            echo "'latest' is $CURRENT; not moving it to $VERSION"
+            exit 0
+          fi
+
+          # dist-tag over trusted publishing (OIDC) needs npm 11.21+ and
+          # "Allow npm dist-tag" enabled on the package's trusted publisher.
+          npm install -g "npm@>=11.21.0 <12"
+          if npm dist-tag add "$NAME@$VERSION" latest; then
+            echo "Moved 'latest' from $CURRENT to $VERSION"
+          else
+            echo "::warning::Published $NAME@$VERSION but could not move 'latest' from $CURRENT. Check that the npm trusted publisher allows dist-tag."
           fi
       - id: publish-event
         uses: ./_speakeasy
