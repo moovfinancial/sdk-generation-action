@@ -13,6 +13,9 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 jobs:
   build-and-push-image:
+    # Upstream's runner group doesn't exist in this fork, and the action
+    # builds from the local Dockerfile (action.yml), so the image is unused.
+    if: github.repository == 'speakeasy-api/sdk-generation-action'
     runs-on:
       group: ubuntu-latest-large
     permissions:
